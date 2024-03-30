@@ -12,13 +12,22 @@ using HarmonyLib;
 
 public class StartTheGamePaused : MonoBehaviour
 {
-
+    public static bool started = false;
     public static PatchTracker mainPatch {get; private set;}
 
-    public void Start() {
+    public void Start() => SceneManager.sceneLoaded += Load;
+
+    public void OnDestroy() => SceneManager.sceneLoaded -= Load;
+
+    public void Load() {
         try
         {
-            mainPatch = new PatchTracker("StartTheGamePaused", new MainPatch());
+            if (!started) {
+                mainPatch = new PatchTracker("StartTheGamePaused", new MainPatch());
+                started = true;
+            } else {
+                mainPatch.Subscribe();
+            }
         }
         catch (Exception ex)
         {
