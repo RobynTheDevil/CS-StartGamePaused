@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using SecretHistories;
 using SecretHistories.UI;
 using SecretHistories.Manifestations;
@@ -19,7 +21,7 @@ public class StartTheGamePaused : MonoBehaviour
 
     public void OnDestroy() => SceneManager.sceneLoaded -= Load;
 
-    public void Load() {
+    public void Load(Scene scene, LoadSceneMode mode) {
         try
         {
             if (!started) {
